@@ -1309,9 +1309,12 @@ getAttributeValuePrivateKey(objectEntry *object, CK_ATTRIBUTE_PTR pTemplate, CK_
                 break;
             case CKA_LABEL:
             {
-                char *sn = X509_NAME_oneline(object->storage.certificate.x509->cert_info->subject, NULL, 256);
+                char *sn = "";
                 char tag[] = "(  )";
 
+                if (object->storage.certificate.x509) {
+                    sn = X509_NAME_oneline(object->storage.certificate.x509->cert_info->subject, NULL, 256);
+                }
 
                 size_t m = strlen(sn);
                 size_t n = strlen(tag);
