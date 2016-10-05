@@ -1232,12 +1232,12 @@ getAttributeValuePublicKey(objectEntry *object, CK_ATTRIBUTE_PTR pTemplate, CK_U
             case CKA_MODULUS_BITS:
             {
                 CK_ULONG len = 0;
-                EVP_PKEY *rsa = NULL;
+                EVP_PKEY *key = NULL;
 
                 debug(DEBUG_VERBOSE,"  CKA_MODULUS_BITS\n");
-                rsa = object->storage.publicKey.pubKey;
+                key = object->storage.publicKey.pubKey;
 
-                len = BN_num_bits(rsa->pkey.rsa->n);
+                len = EVP_PKEY_bits(key);
                 if(pTemplate[i].pValue != NULL) {
                     if(pTemplate[i].ulValueLen >= sizeof(CK_ULONG)) {
                         memcpy(pTemplate[i].pValue, &len, sizeof(CK_ULONG));
